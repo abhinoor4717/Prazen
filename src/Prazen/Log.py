@@ -1,6 +1,8 @@
 from loguru import logger
 import sys
 
+from Settings import Settings
+
 class CoreLogger:
     _instance = None
 
@@ -76,26 +78,36 @@ class ClientLogger:
         return self.Logger
 
 def CORE_TRACE(*args):
-    CoreLogger().Get().trace(*args)
+    if Settings.DEBUG:
+        CoreLogger().Get().trace(*args)
 def CORE_INFO(*args):
-    CoreLogger().Get().info(*args)
+    if Settings.DEBUG:
+        CoreLogger().Get().info(*args)
 def CORE_WARNING(*args):
-    CoreLogger().Get().warning(*args)
+    if Settings.DEBUG:
+        CoreLogger().Get().warning(*args)
 def CORE_SUCCESS(*args):
-    CoreLogger().Get().success(*args)
+    if Settings.DEBUG:
+        CoreLogger().Get().success(*args)
 def CORE_CRITICAL(*args):
-    CoreLogger().Get().critical(*args)
+    if Settings.DEBUG:
+        CoreLogger().Get().critical(*args)
 
 def TRACE(*args):
-    ClientLogger().Get().trace(*args)
+    if Settings.DEBUG:
+        ClientLogger().Get().trace(*args)
 def INFO(*args):
-    ClientLogger().Get().info(*args)
+    if Settings.DEBUG:
+        ClientLogger().Get().info(*args)
 def WARNING(*args):
-    ClientLogger().Get().warning(*args)
+    if Settings.DEBUG:
+        ClientLogger().Get().warning(*args)
 def SUCCESS(*args):
-    ClientLogger().Get().success(*args)
+    if Settings.DEBUG:
+        ClientLogger().Get().success(*args)
 def CRITICAL(*args):
-    ClientLogger().Get().critical(*args)
+    if Settings.DEBUG:
+        ClientLogger().Get().critical(*args)
 
 __all__ = [
     # "CORE_TRACE",

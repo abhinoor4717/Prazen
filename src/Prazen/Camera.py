@@ -21,11 +21,12 @@ class Camera:
         keys = pygame.key.get_pressed()
 
         velocity = self.speed * dt
-        if (keys[pygame.K_RIGHT]):
-            self.x += velocity
-        if (keys[pygame.K_LEFT]):
-            self.x -= velocity
-        if (keys[pygame.K_UP]):
-            self.y += velocity
-        if (keys[pygame.K_DOWN]):
-            self.y -= velocity
+        if (keys[pygame.K_LSHIFT]):
+            if (keys[pygame.K_RIGHT]):
+                self.x += velocity
+            if (keys[pygame.K_LEFT]):
+                self.x -= velocity
+            if (keys[pygame.K_UP]):
+                self.y -= velocity
+            if (keys[pygame.K_DOWN]):
+                self.y += velocity

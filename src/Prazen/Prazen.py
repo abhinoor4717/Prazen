@@ -2,27 +2,37 @@ import pygame
 from Log import *
 
 from Camera import Camera
+from Player import Player
+from Text import Text
 
 class Prazen:
     def __init__(self, screen: pygame.Surface) -> None:
         self.Screen = screen
 
-        self.Camera = Camera(-100, 100, pygame.display.get_window_size()[0], pygame.display.get_window_size()[1])
+        self.Camera = Camera(0, 0, pygame.display.get_window_size()[0], pygame.display.get_window_size()[1])
 
-        self.PlayerX = 0
-        self.PlayerY = 0
+        self.Player = Player(0,10,10,20, self.Screen)
+        self.FPS = 0
+
+        self.PlayerPosText = Text(f'Player pos: ({self.Player.x}, {self.Player.y})', self.Player.x-30,self.Player.y-30, 50)
+        self.FpsText = Text(f'FPS: {int(self.FPS)}', 30, 10, 20)
 
     def OnWindowResize(self, w, h):
         self.Camera.OnWindowResize(w, h)
+    def SetFps(self, fps):
+        self.FPS = fps
 
     def OnUpdate(self, dt) -> None:
         self.Screen.fill("black")
-        self.DrawGrid()
+
+        self.PlayerPosText.Update(f'Player pos: ({self.Player.x}, {self.Player.y})', self.Player.x, self.Player.y - 30, self.Screen)
+        self.FpsText.Update(f'FPS: {int(self.FPS)}', None, None, self.Screen)
+
+        self.Player.Move(dt)
+        self.Player.Draw(self.Camera)
 
         self.Camera.Move(dt)
 
-        playerPos = self.Camera.TranslatePos(self.PlayerX, self.PlayerY)
-        pygame.draw.rect(self.Screen, "red", (playerPos.x, playerPos.y, 10, 20))
     def DrawGrid(self):
         cellSize = 100
 

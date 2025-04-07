@@ -30,13 +30,15 @@ class App:
             Timestep = (Now - self.LastFrameTime) / 1000
             self.LastFrameTime = Now
 
+            Game.SetFps(self.Clock.get_fps())
+
             for Event in pygame.event.get():
                 if Event.type == pygame.QUIT:
                     self.Running = False
                 elif Event.type == pygame.VIDEORESIZE:
                     # Update the screen size when the window is resized
                     screen_width, screen_height = Event.size
-                    self.Screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
+                    self.Screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE | pygame.DOUBLEBUF, vsync=1)
                     Game.OnWindowResize(screen_width, screen_height)
 
             Game.OnUpdate(Timestep)
@@ -46,6 +48,9 @@ class App:
             self.Clock.tick()
 
         pygame.quit()
+
+    def GetFps(self) -> float:
+        return self.Clock.get_fps()
 
 if __name__ == "__main__":
     app = App()
