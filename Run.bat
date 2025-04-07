@@ -1,3 +1,1 @@
-"venv\Scripts\python.exe" Application.py
-
-"C:\Path Files\cmd.bat"
+".venv\Scripts\python.exe" src/Prazen/Application.py && pause
