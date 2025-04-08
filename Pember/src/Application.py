@@ -1,6 +1,12 @@
 import pygame
 from .Layerstack import Layerstack
 
+from .Renderer import Renderer
+
+from .Events.Event import Event
+from .Events.WindowEvents import *
+from .Log  import *
+
 class Settings:
     class Window:
         WIDTH = 800
@@ -29,26 +35,40 @@ class Application(SingletonBase):
             self.Running = True
             self.LastFrameTime = pygame.time.get_ticks()
 
+            Renderer.Init(self.Screen)
+
+            self.Eventstack = []
             self.Layerstack = Layerstack()
 
             self.initialized = True  # Flag to mark initialization as complete
 
     def Run(self) -> None:
+        
         while self.Running:
             # Deltatime
             Now = pygame.time.get_ticks()
             Timestep = (Now - self.LastFrameTime) / 1000
             self.LastFrameTime = Now
 
+            self.Eventstack.clear()
+
             for Event in pygame.event.get():
                 if Event.type == pygame.QUIT:
+                    self.Eventstack.append(WindowClosedEvent())
                     self.Running = False
                 elif Event.type == pygame.VIDEORESIZE:
                     # Update the screen size when the window is resized
-                    screen_width, screen_height = Event.size
-                    self.Screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE | pygame.DOUBLEBUF, vsync=1)
+                    w, h = Event.size
+                    event = WindowResizedEvent(w, h)
+                    # TRACE(event)
+                    self.Eventstack.append(event)
+                    self.Screen = pygame.display.set_mode((w, h), pygame.RESIZABLE | pygame.DOUBLEBUF, vsync=1)
+                    Renderer.Camera.OnWindowResize(w, h)
 
             for layer in self.Layerstack.Layers:
+                if len(self.Eventstack) > 0:
+                    for event in self.Eventstack:
+                        layer.OnEvent(event)
                 layer.OnUpdate(Timestep)
 
             pygame.display.flip()

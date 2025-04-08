@@ -30,3 +30,6 @@ class Camera:
                 self.y -= velocity
             if (keys[pygame.K_DOWN]):
                 self.y += velocity
+            if (keys[pygame.K_0]):
+                self.x = 0
+                self.y = 0

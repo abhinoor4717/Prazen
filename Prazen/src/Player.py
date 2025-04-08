@@ -2,6 +2,7 @@ import pygame
 
 from .Camera import Camera
 from Pember import Text
+from Pember import Renderer
 
 class Settings:
     Display_Position = True
@@ -35,13 +36,15 @@ class Player(pygame.sprite.Sprite):
                 self.y -= velocity
             if (keys[pygame.K_DOWN]):
                 self.y += velocity
+            if (keys[pygame.K_0]):
+                self.x = 0
+                self.y = 0
 
-    def Draw(self, cam: Camera):
-        playerPos = cam.TranslatePos(self.x, self.y)
-        pygame.draw.rect(self.screen, "white", (playerPos.x, playerPos.y, self.width, self.height))
+    def Draw(self):
+        Renderer.DrawRect(pygame.rect.Rect(self.x, self.y, self.width, self.height), "white")
         if self.PlayerPosText:
-            self.PlayerPosText.Update(f'Player pos: ({self.x}, {self.y})', playerPos.x, playerPos.y - 15, self.screen)
+            self.PlayerPosText.Update(f'Player pos: ({self.x}, {self.y})', self.x, self.y - 15)
     
-    def Update(self, dt, cam: Camera):
+    def Update(self, dt):
         self.Move(dt)
-        self.Draw(cam)
+        self.Draw()
