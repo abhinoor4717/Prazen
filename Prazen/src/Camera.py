@@ -1,6 +1,6 @@
 import pygame
 
-from util.PositionUtil import Coordinate
+from .util.PositionUtil import Coordinate
 
 class Camera:
     def __init__(self, x, y, width, height):
@@ -16,7 +16,7 @@ class Camera:
         self.height = h
 
     def TranslatePos(self, x, y):
-        return Coordinate(x - self.x, y + self.y)
+        return Coordinate(x - self.x, y - self.y)
     def Move(self, dt):
         keys = pygame.key.get_pressed()
 

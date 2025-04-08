@@ -1,1 +1,1 @@
-".venv\Scripts\python.exe" src/Prazen/Application.py && pause
+".venv/Scripts/activate" && python -m Prazen.src.Entrypoint

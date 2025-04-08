@@ -1,7 +1,7 @@
 from loguru import logger
 import sys
 
-from Settings import Settings
+from .Settings import Settings
 
 class CoreLogger:
     _instance = None

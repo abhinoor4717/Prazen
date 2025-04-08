@@ -1,6 +1,10 @@
 import pygame
 
-from Camera import Camera
+from .Camera import Camera
+from Pember import Text
+
+class Settings:
+    Display_Position = True
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h, screen):
@@ -14,6 +18,9 @@ class Player(pygame.sprite.Sprite):
         self.rect = pygame.Rect(x, y, w, h)
 
         self.speed = 1000
+        self.PlayerPosText = None
+        if Settings.Display_Position:
+            self.PlayerPosText = Text(f'Player pos: ({self.x}, {self.y})', self.x, self.y - 15, 20)
 
     def Move(self, dt):
         keys = pygame.key.get_pressed()
@@ -32,6 +39,8 @@ class Player(pygame.sprite.Sprite):
     def Draw(self, cam: Camera):
         playerPos = cam.TranslatePos(self.x, self.y)
         pygame.draw.rect(self.screen, "white", (playerPos.x, playerPos.y, self.width, self.height))
+        if self.PlayerPosText:
+            self.PlayerPosText.Update(f'Player pos: ({self.x}, {self.y})', playerPos.x, playerPos.y - 15, self.screen)
     
     def Update(self, dt, cam: Camera):
         self.Move(dt)
