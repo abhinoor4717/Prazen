@@ -10,23 +10,28 @@ class MouseButtonEvent(Event):
         return f'MouseButtonEvent: {self.Button}'
     
 class MouseButtonPressedEvent(MouseButtonEvent):
-    def __init__(self, button):
+    def __init__(self, x, y, button):
         super().__init__(button)
         self.Type = EventType.MouseButtonPressed
+        
+        self.x = x
+        self.y = y
 
     def GetName(self):
-        return f'MouseButtonPressedEvent: {self.Button}'
+        return f'MouseButtonPressedEvent: {self.Button} ({self.x}, {self.y})'
     
 class MouseButtonReleasedEvent(MouseButtonEvent):
-    def __init__(self, button):
+    def __init__(self, x, y, button):
         super().__init__(button)
         self.Type = EventType.MouseButtonReleased
 
+        self.x = x
+        self.y = y
 
     def GetName(self):
-        return f'MouseButtonReleasedEvent: {self.Button}'
+        return f'MouseButtonReleasedEvent: {self.Button} ({self.x}, {self.y})'
     
-class MouseMoveEvent(Event):
+class MouseMovedEvent(Event):
     def __init__(self, x, y):
         super().__init__()
         self.Type = EventType.MouseMoved

@@ -5,8 +5,8 @@ class EventType(Enum):
     Null = auto()
     WindowClosed = auto()
     WindowResized = auto()
-    WindowFocused = auto()
-    WindowLostFocus = auto()
+    WindowFocusGained = auto()
+    WindowFocusLost = auto()
     WindowMoved = auto()
     
     KeyPressed = auto()

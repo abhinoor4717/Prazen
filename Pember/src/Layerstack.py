@@ -11,6 +11,9 @@ class Layerstack:
         l = self.Layers.pop(index)
         l.OnDetach()
         return l
-    def PopLayer(self, layer: Layer) -> None:
+    def Remove(self, layer: Layer) -> None:
         self.Layers.remove(layer)
         layer.OnDetach()
+        
+    def __iter__(self):
+        return iter(self.Layers)

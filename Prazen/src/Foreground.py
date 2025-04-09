@@ -26,6 +26,8 @@ class Foreground(Layer):
         self.Player.Move(dt)
         self.Player.Draw()
 
+    def OnEvent(self, event):
+        pass
     def GetApplication(self):
         from .Prazen import Prazen
         return Prazen.GetInstance()
